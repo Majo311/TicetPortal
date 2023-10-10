@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Data;
 using System.Diagnostics;
 using TicetPortal.Models;
 using TicetPortal.Others;
+using System.Linq;
+using TicetPortal.Others.Extensions;
 
 namespace TicetPortal.Controllers
 {
@@ -17,8 +20,10 @@ namespace TicetPortal.Controllers
 
         public IActionResult Index()
         {
-            MsSqlAdoNet_Reader msSqlAdoNet_Reader = new MsSqlAdoNet_Reader(_configuration);
-            msSqlAdoNet_Reader.GetStoredProcedureResult("", "");
+           MsSqlAdoNet_Reader msSqlAdoNet_Reader = new MsSqlAdoNet_Reader(_configuration);
+           var x= msSqlAdoNet_Reader.GetStoredProcedureResult("dbo.GetPersons", "Duffy").GetPersonAsList();
+          
+
             return View();
         }
 
