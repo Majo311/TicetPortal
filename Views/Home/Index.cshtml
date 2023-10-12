@@ -1,5 +1,6 @@
-﻿
+﻿@model IEnumerable<Person>
 @using System.Data;
+@using System.Reflection;
 
 @{
     ViewData["Title"] = "Home Page";
@@ -26,23 +27,26 @@
 <table class="table_result">
     <thead>
         <tr>
-            @if (Model!=null)
-            foreach (DataColumn col in Model.Columns)
-            {
-                <th><strong>@Html.Display(col.ColumnName.ToString())</strong></th>
+            @{
+                @if(@Model!=null)
+                foreach(var pr in typeof(Person).GetProperties())
+                {
+                    <th><strong>@pr.Name</strong></th>
+                }
             }
+
         </tr>
     </thead>
     <tbody>
-        @if (Model != null)
-        foreach (DataRow row in Model.Rows)
+        @if(Model!=null)
+        @foreach(Person p in @Model.ToList())
         {
-            <tr>
-                @foreach (DataColumn col in Model.Columns)
-                {
-                    <td>@row[col.ColumnName].ToString()</td>
-                }
-            </tr>
+          <tr>
+              <td>@p.FirstName</td>
+              <td>@p.LastName</td>
+              <td>@p.PhoneNumber</td>
+              <td>@p.PhoneNumberType</td>
+          </tr>
         }
     </tbody>
 </table>

@@ -30,13 +30,13 @@ namespace TicetPortal.Controllers
             if(!String.IsNullOrEmpty(parameterTxt))
             parameterTxt= parameterTxt.Remove(0, parameterTxt.IndexOf('=')+1);
 
-            DataTable dt = null;
+            List<Person> persons = new List<Person>();
             if (!String.IsNullOrEmpty(parameterTxt))
             {
                 MsSqlAdoNet_Reader msSqlAdoNet_Reader = new MsSqlAdoNet_Reader(_configuration);
-                dt = msSqlAdoNet_Reader.GetStoredProcedureResult("dbo.GetPersons", "Duffy").GetPersonAsDataTable();
+                persons = msSqlAdoNet_Reader.GetStoredProcedureResult("dbo.GetPersons", "Duffy").GetPersonAsList();
             }
-            return View(dt);
+            return View(persons);
         }
         public IActionResult Index()
         {
