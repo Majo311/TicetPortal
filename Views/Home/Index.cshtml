@@ -1,6 +1,4 @@
 ﻿
-@model System.Data.DataTable
-
 @using System.Data;
 
 @{
@@ -25,13 +23,13 @@
     }
         
 </div>
-<table class="table table-hover">
+<table class="table_result">
     <thead>
         <tr>
             @if (Model!=null)
             foreach (DataColumn col in Model.Columns)
             {
-                    <th><strong>@Html.Display(col.ColumnName.ToString())</strong></th>
+                <th><strong>@Html.Display(col.ColumnName.ToString())</strong></th>
             }
         </tr>
     </thead>
