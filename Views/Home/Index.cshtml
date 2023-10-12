@@ -1,21 +1,20 @@
-﻿@* @* @model TicetPortal.Models.Person  *@
+﻿
 @model System.Data.DataTable
+
 @using System.Data;
 
 @{
     ViewData["Title"] = "Home Page";
 }
 <div class="inputX">
-    @Html.BeginForm(null, null, FormMethod.Post, new {@id = "_frmSubmitId", role = "form"})
+    @using(@Html.BeginForm("Index","Home", FormMethod.Post, new {@id = "_frmSubmitId", role = "form"}))
     {
-        <fieldset>
-            <legend>Search</legend>
             <div>
-                <input type="checkbox" id="chByName" value="1" checked onclick="chByNameClicked(this)">
+                <input type="checkbox" id="chByName" value="1" checked onclick="chByNameClicked(this)"/>
                 <label for="chByName">Search by Name or LastName </label>
             </div>
             <div>
-                <input type="checkbox" id="chByPhoneNumber" value="1" onclick="chByPhoneClicked(this)">
+                <input type="checkbox" id="chByPhoneNumber" value="1" onclick="chByPhoneClicked(this)"/>
                 <label for="chByPhoneNumber">Search by Phone number </label>
             </div>
             <div>
@@ -23,7 +22,6 @@
                 @Html.TextBox("tb_Parameter")
                 <input type="submit" value="Search" id="btnSearch" />
             </div>
-        </fieldset>
     }
         
 </div>
@@ -33,7 +31,7 @@
             @if (Model!=null)
             foreach (DataColumn col in Model.Columns)
             {
-                <th>@col.ColumnName.ToString()</th>
+                    <th><strong>@Html.Display(col.ColumnName.ToString())</strong></th>
             }
         </tr>
     </thead>
@@ -50,4 +48,3 @@
         }
     </tbody>
 </table>
-</div>
