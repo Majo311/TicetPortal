@@ -17,25 +17,36 @@ namespace TicetPortal.Controllers
             _logger = logger;
             _configuration = configuration;
         }
+        [HttpPost]
+        public IActionResult SearchPersonData(string parameterTxt)
+        {
+            MsSqlAdoNet_Reader msSqlAdoNet_Reader = new MsSqlAdoNet_Reader(_configuration);
+            DataTable dt = msSqlAdoNet_Reader.GetStoredProcedureResult("dbo.GetPersons", "Duffy").GetPersonAsDataTable();
+            return View(dt);
+        }
+        [HttpPost]
+        public IActionResult Index(string parameterTxt)
+        {
+            if(!String.IsNullOrEmpty(parameterTxt))
+            parameterTxt= parameterTxt.Remove(0, parameterTxt.IndexOf('=')+1);
 
+            DataTable dt = null;
+            if (!String.IsNullOrEmpty(parameterTxt))
+            {
+                MsSqlAdoNet_Reader msSqlAdoNet_Reader = new MsSqlAdoNet_Reader(_configuration);
+                dt = msSqlAdoNet_Reader.GetStoredProcedureResult("dbo.GetPersons", "Duffy").GetPersonAsDataTable();
+            }
+            return View(dt);
+        }
         public IActionResult Index()
         {
-           MsSqlAdoNet_Reader msSqlAdoNet_Reader = new MsSqlAdoNet_Reader(_configuration);
-           var x= msSqlAdoNet_Reader.GetStoredProcedureResult("dbo.GetPersons", "Duffy").GetPersonAsList();
-          
-
             return View();
         }
-
         public IActionResult Privacy()
         {
             return View();
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+
     }
 }

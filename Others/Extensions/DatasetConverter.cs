@@ -9,5 +9,9 @@ namespace TicetPortal.Others.Extensions
         {
            return (from DataRow dr in Dataset.Tables[0].Rows select new Person(dr["FirstName"].ToString(), dr["LastName"].ToString(), dr["PhoneNumber"].ToString(), dr["Type of phone"].ToString())).ToList();
         }
+        public static DataTable  GetPersonAsDataTable(this DataSet Dataset)
+        {
+            return Dataset.Tables[0];
+        }
     }
 }

@@ -1,15 +1,53 @@
-﻿@model TicetPortal.Models.Person
+﻿@* @* @model TicetPortal.Models.Person  *@
+@model System.Data.DataTable
+@using System.Data;
+
 @{
     ViewData["Title"] = "Home Page";
 }
-
-<div class="dataTable">
-   <thead>
-       <tr>
-            <th>Last Name</th>
-            <th>First Name</th>
-            <th>Phone number</th>
-            <th>Phone type</th>
-       </tr>
-   </thead>
+<div class="inputX">
+    @Html.BeginForm(null, null, FormMethod.Post, new {@id = "_frmSubmitId", role = "form"})
+    {
+        <fieldset>
+            <legend>Search</legend>
+            <div>
+                <input type="checkbox" id="chByName" value="1" checked onclick="chByNameClicked(this)">
+                <label for="chByName">Search by Name or LastName </label>
+            </div>
+            <div>
+                <input type="checkbox" id="chByPhoneNumber" value="1" onclick="chByPhoneClicked(this)">
+                <label for="chByPhoneNumber">Search by Phone number </label>
+            </div>
+            <div>
+                @Html.Label("Please insert a parameter to search!")
+                @Html.TextBox("tb_Parameter")
+                <input type="submit" value="Search" id="btnSearch" />
+            </div>
+        </fieldset>
+    }
+        
+</div>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            @if (Model!=null)
+            foreach (DataColumn col in Model.Columns)
+            {
+                <th>@col.ColumnName.ToString()</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null)
+        foreach (DataRow row in Model.Rows)
+        {
+            <tr>
+                @foreach (DataColumn col in Model.Columns)
+                {
+                    <td>@row[col.ColumnName].ToString()</td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>
 </div>
