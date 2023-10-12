@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Person>
+﻿@model List<Person>
 @using System.Data;
 @using System.Reflection;
 
@@ -24,7 +24,7 @@
     }
         
 </div>
-<table class="table_result">
+<table class="styled-table">
     <thead>
         <tr>
             @{
@@ -34,19 +34,19 @@
                     <th><strong>@pr.Name</strong></th>
                 }
             }
-
         </tr>
     </thead>
     <tbody>
         @if(Model!=null)
-        @foreach(Person p in @Model.ToList())
+        @foreach(Person @p in @Model)
         {
           <tr>
-              <td>@p.FirstName</td>
+              <td>@p.FirstName.ToString()</td>
               <td>@p.LastName</td>
               <td>@p.PhoneNumber</td>
               <td>@p.PhoneNumberType</td>
           </tr>
         }
     </tbody>
+
 </table>
