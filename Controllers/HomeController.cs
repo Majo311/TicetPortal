@@ -27,14 +27,13 @@ namespace TicetPortal.Controllers
         [HttpPost]
         public IActionResult Index(string parameterTxt)
         {
-            if(!String.IsNullOrEmpty(parameterTxt))
-            parameterTxt= parameterTxt.Remove(0, parameterTxt.IndexOf('=')+1);
-
             List<Person> persons = new List<Person>();
             if (!String.IsNullOrEmpty(parameterTxt))
             {
+                parameterTxt = parameterTxt.Remove(0, parameterTxt.IndexOf('=') + 1);//&__RequestVerificationToken
+                parameterTxt = parameterTxt.Remove(parameterTxt.IndexOf("&__RequestVerificationToken"));
                 MsSqlAdoNet_Reader msSqlAdoNet_Reader = new MsSqlAdoNet_Reader(_configuration);
-                persons = msSqlAdoNet_Reader.GetStoredProcedureResult("dbo.GetPersons", "Duffy").GetPersonAsList();
+                persons = msSqlAdoNet_Reader.GetStoredProcedureResult("dbo.GetPersons", parameterTxt).GetPersonAsList(); 
             }
             return View(persons);
         }
